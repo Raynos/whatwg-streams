@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "tape": "~2.3.2",
-    "bluebird": "~1.0.0"
+    "bluebird": "~0.10.0-0"
   },
   "devDependencies": {
     "tape": "~1.0.2"
