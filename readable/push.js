@@ -16,4 +16,8 @@ function push(streamState, data) {
         streamState.readablePromise._fulfill(undefined)
         streamState.readableState = "readable"
     }
+
+    // NON STANDARD
+    var needsMore = false
+    return needsMore
 }

@@ -13,6 +13,7 @@ function abort(streamState, reason) {
 
     streamState.onAbort(reason)
     streamState.finishedPromise._fulfill(undefined)
+    // should this be errored ?
     streamState.readableState = "finished"
 
     if (streamState.readableState === "waiting") {
