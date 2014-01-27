@@ -6,11 +6,11 @@ var callPull = require("./call-pull.js");
 module.exports = read
 
 function read(streamState) {
-    if (streamState.readableState === "waiting") {
+    if (streamState.state === "waiting") {
         throw new Error("no data available yet")
-    } else if (streamState.readableState === "errored") {
+    } else if (streamState.state === "errored") {
         throw streamState.storedError
-    } else if (streamState.readableState === "finished") {
+    } else if (streamState.state === "finished") {
         throw new Error("stream has been completely read")
     }
 
@@ -19,12 +19,12 @@ function read(streamState) {
 
     if (streamState.buffer.length === 0) {
         if (streamState.draining) {
-            streamState.finishedPromise._fulfill(undefined)
+            streamState.closedPromise._fulfill(undefined)
             streamState.readablePromise =
                 Promise.rejected(new Error("stream has been completely read"))
-            streamState.readableState = "finished"
+            streamState.state = "finished"
         } else {
-            streamState.readableState = "waiting"
+            streamState.state = "waiting"
             streamState.readablePromise = new Promise()
             callPull(streamState)
         }

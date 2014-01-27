@@ -1,9 +1,9 @@
 var WritableStreamState = require("./writable/stream-state.js")
 var constructor = require("./writable/constructor.js")
 var write = require("./writable/write.js")
-var waitForWritable = require("./writable/wait-for-writable.js")
+var wait = require("./writable/wait.js")
 var close = require("./writable/close.js")
-var dispose = require("./writable/dispose.js")
+var abort = require("./writable/abort.js")
 
 var defineProperty = Object.defineProperty
 
@@ -23,14 +23,14 @@ proto.write = function protoWrite(chunk) {
     return write(this._state, chunk)
 }
 
-proto.waitForWritable = function protoWaitForWritable() {
-    return waitForWritable(this._state)
+proto.wait = function protoWait() {
+    return wait(this._state)
 }
 
-defineProperty(proto, "writableState", {
+defineProperty(proto, "state", {
     configurable: true,
-    get: function getWritableState() {
-        return this._state.writableState
+    get: function getState() {
+        return this._state.state
     }
 })
 
@@ -38,8 +38,8 @@ proto.close = function protoClose() {
     return close(this._state)
 }
 
-proto.dispose = function protoDispose(reason) {
-    return dispose(this._state, reason)
+proto.abort = function protoAbort(reason) {
+    return abort(this._state, reason)
 }
 
 defineProperty(proto, "closed", {

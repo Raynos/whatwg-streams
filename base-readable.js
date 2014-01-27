@@ -1,7 +1,7 @@
 var ReadableStreamState = require("./readable/stream-state.js")
 var constructor = require("./readable/constructor.js")
 var read = require("./readable/read.js")
-var waitForReadable = require("./readable/wait-for-readable.js")
+var wait = require("./readable/wait.js")
 var abort = require("./readable/abort.js")
 
 var defineProperty = Object.defineProperty
@@ -22,14 +22,14 @@ proto.read = function protoRead() {
     return read(this._state)
 }
 
-proto.waitForReadable = function protoWaitForReadable() {
-    return waitForReadable(this._state)
+proto.wait = function protoWait() {
+    return wait(this._state)
 }
 
-defineProperty(proto, "readableState", {
+defineProperty(proto, "state", {
     configurable: true,
-    get: function getReadableState() {
-        return this._state.readableState
+    get: function getState() {
+        return this._state.state
     }
 })
 
@@ -37,10 +37,10 @@ proto.abort = function protoAbort(reason) {
     return abort(this._state, reason)
 }
 
-defineProperty(proto, "finished", {
+defineProperty(proto, "closed", {
     configurable: true,
-    get: function getFinished() {
-        return this._state.finished
+    get: function getClosed() {
+        return this._state.closedPromise
     }
 })
 

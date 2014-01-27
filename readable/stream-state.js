@@ -7,10 +7,10 @@ function ReadableStreamState(options) {
     this.started = false
     this.draining = false
     this.pulling = false
-    this.readableState = "waiting"
+    this.state = "waiting"
     this.storedError = null
     this.readablePromise = new Promise()
-    this.finishedPromise = new Promise()
+    this.closedPromise = new Promise()
     this.startedPromise = new Promise()
     this.onAbort = options.abort
     this.onPull = options.pull
